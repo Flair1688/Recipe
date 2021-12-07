@@ -1,0 +1,16 @@
+{% extends 'recipe_app/base.html' %}
+{% block content %}
+
+<div class="header-bar" style="margin-top: 8%">
+    <a href="{% url 'recipes' %}">&#8592; Go Back</a>
+</div>
+
+<div class="card-body">
+
+<form method="POST">
+    {% csrf_token %}
+    <p>Вы точно хотите удалить эту задачу? ""{{recipe}}</p>
+    <input class="button" type="submit" value="Delete"/>
+</form>
+</div>
+{% endblock content %}

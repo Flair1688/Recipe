@@ -1,0 +1,116 @@
+<!-- templates/post_detail.html -->
+
+{% extends 'recipe_app/base.html' %}
+
+{% block content %}
+<div class="bgcolor">
+<main role="main">
+      <section class="jumbotron text-center">
+        <div class="row">
+        <div class="container">
+          <h1 id="background_text" class="jumbotron-heading">&ensp;&ensp;&ensp; &ensp;Chef&ensp;&ensp;Rye&emsp;</h1>
+          <!--<p class="lead text-muted">it entirely.</p>
+          <p>
+            <a href="#" class="btn btn-primary my-2">Main call to action</a>
+            <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+          </p>-->
+            </div>
+          </div>
+      </section>
+    </main>
+
+
+ <form action="{% url 'filter' %}" method="get">
+    <div class="left-side my-4">
+        <h3 class="sear-head editContent">Ингредиенты</h3>
+        <ul class="w3layouts-box-list">
+            {% for ingredient in view.get_ingredient %}
+            <li class="editContent">
+                <input type="checkbox" class="checked" name="ingredient" value="{{ ingredient.id }}">
+                <span class="span editContent">{{ ingredient.ingredient_title }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+     <div class="left-side">
+        <h3 class="sear-head editContent">Категория блюда</h3>
+        <ul class="w3layouts-box-list">
+            {% for category in view.get_category %}
+                <li class="editContent">
+                    <input type="checkbox" class="checked" name="category" value="{{ category.id }}">
+                    <span class="span editContent">{{ category.name }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <button type="submit">Найти</button>
+</form>
+
+{% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}">Logout</a>
+
+    {% else %}
+    <a href="{% url 'register' %}">Login</a>
+{% endif %}
+
+  {% for recipe in recipes %}
+
+        {% if recipe.title %}
+
+      <div class="album py-5 bg-light ">
+        <div class="container ">
+          <div class="row ">
+      <hr class="featurette-divider">
+        <div class="container marketing">
+          <div class="row featurette">
+            <div class="col-md-8 order-md-2">
+              <a href="{% url 'recipe_detail' recipe.pk %}" class="lead"><h2 class="featurette-heading">{{ recipe.title }}</h2></a>
+                <p class="clip"> {{ recipe.description }} </p>
+            </div>
+          <div class="col-md-3 order-md-1">
+            <img  src="/media/{{ recipe.image }}" style="height: 220px; width: 240px"  alt="Generic placeholder image">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+        {% endif %}
+            <a href="{% url 'recipe-update' recipe.id %}">Обновить</a></i>
+        <a id="add-link" href="{% url 'recipe-create' %}">Создать</a>
+        <a class="delete-link" href="{% url 'recipe-delete' recipe.id %}">Удалить</a>
+        {% empty %}
+        <h3>No items in list</h3>
+
+
+        <!-- /END THE FEATURETTES -->
+
+      </div><!-- /.container -->
+</div>
+{% endfor %}
+<!--<div class="pagination container">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">&#171;</a>
+            <a href="?page=1">1</a>
+            <span href="?page={{ page_obj.number }}">{{ page_obj.number }}</span>
+
+        {% endif %}
+
+        {% if page_obj.number > 1 %}
+        <span class="current">
+                    . . .
+         </span>
+        {% endif %}
+
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+            <a href="?page={{ page_obj.next_page_number }}">&#187;</a>
+        {% endif %}
+    </span>
+</div>-->
+{% endblock content %}
