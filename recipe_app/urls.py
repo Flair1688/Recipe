@@ -13,7 +13,7 @@ urlpatterns = [
     path('filter/', views.FilterRecipeView.as_view(), name='filter'),
     path('search/', views.Search.as_view(), name='search'),
 
-path('login/', views.CustomLoginView.as_view(), name='login'),
+    path('login/', views.CustomLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('register/', views.RegisterPage.as_view(), name='register'),
 

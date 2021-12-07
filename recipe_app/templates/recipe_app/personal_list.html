@@ -79,7 +79,7 @@
 
 
         {% endif %}
-            <a href="{% url 'recipe-update' recipe.id %}">Обновить</a></i>
+            <a href="{% url 'recipe-update' recipe.id %}">Обновить</a>
         <a id="add-link" href="{% url 'recipe-create' %}">Создать</a>
         <a class="delete-link" href="{% url 'recipe-delete' recipe.id %}">Удалить</a>
         {% empty %}

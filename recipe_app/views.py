@@ -4,7 +4,10 @@ from django.contrib.auth.views import LoginView
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, FormView, UpdateView, DeleteView, CreateView
+from django.views.generic import  FormView
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Recipe, Ingredient, Category
 
@@ -97,7 +100,7 @@ class RegisterPage(IngredientCategory, FormView):
 class RecipeCreate(CreateView):
     model = Recipe
     fields = ['title', 'description', 'video', 'image', 'number', 'ingredient', 'gram', 'cooking', 'category']
-    success_url = reverse_lazy('recipes')
+    success_url = reverse_lazy('personal_list')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -105,14 +108,18 @@ class RecipeCreate(CreateView):
 
 
 
+
 class RecipeUpdate(UpdateView):
     model = Recipe
     fields = ['title', 'description', 'video', 'image', 'number', 'ingredient', 'gram', 'cooking', 'category']
-    success_url = reverse_lazy('recipes')
+    success_url = reverse_lazy('personal_list')
 
 class RecipeDelete(DeleteView):
     model = Recipe
-    context_object_name = 'recipe'
-    success_url = reverse_lazy('recipes')
+    success_url = reverse_lazy('personal_list')
+
+    def get_queryset(self):
+        owner = self.request.user
+        return self.model.objects.filter(user=owner)
 
 
