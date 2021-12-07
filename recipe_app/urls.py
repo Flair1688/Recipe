@@ -14,7 +14,7 @@ urlpatterns = [
     path('search/', views.Search.as_view(), name='search'),
 
 path('login/', views.CustomLoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(next_page='register'), name='logout'),
+    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('register/', views.RegisterPage.as_view(), name='register'),
 
     path('recipe-create/', views.RecipeCreate.as_view(), name='recipe-create'),

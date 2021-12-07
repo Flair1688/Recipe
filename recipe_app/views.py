@@ -74,13 +74,13 @@ class CustomLoginView(IngredientCategory, LoginView):
     redirect_authenticated_user = True
 
     def get_success_url(self):
-        return reverse_lazy('recipes')
+        return reverse_lazy('personal_list')
 
 class RegisterPage(IngredientCategory, FormView):
     template_name = 'recipe_app/register.html'
     form_class = UserCreationForm
     redirect_authenticated_user = True
-    success_url = reverse_lazy('recipes')
+    success_url = reverse_lazy('personal_list')
 
     def form_valid(self, form):
         user = form.save()
