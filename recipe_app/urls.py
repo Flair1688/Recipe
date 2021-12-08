@@ -10,6 +10,9 @@ urlpatterns = [
     path('recipe/<int:pk>/', views.RecipeDetailView.as_view(), name='recipe_detail'),
     path('', views.RecipeList.as_view(), name='recipes'),
     path('personal_list/', views.PersonalAreaList.as_view(), name='personal_list'),
+    path('authors_list/', views.AuthorsList.as_view(), name='authors_list'),
+    path('author/<int:pk>/', views.AuthorDetailView.as_view(), name='author_detail'),
+
     path('filter/', views.FilterRecipeView.as_view(), name='filter'),
     path('search/', views.Search.as_view(), name='search'),
 

@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
-from taggit.managers import TaggableManager
 
+
+class Avatar(models.Model):
+    image = models.ImageField(blank=True, upload_to='avatar/%Y/%m/%d', verbose_name='Аватарка')
 
 class Category(models.Model):
     name = models.CharField(max_length=20, verbose_name='Категория блюда')

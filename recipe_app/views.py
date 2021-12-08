@@ -1,10 +1,12 @@
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.db.models import Q
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import  FormView
+from django.views.generic import FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -18,6 +20,9 @@ class IngredientCategory:
 
     def get_category(self):
         return Category.objects.all()
+
+    def get_user(self):
+        return User.objects.all()
 
 
 class RecipeList(IngredientCategory, ListView):
@@ -36,11 +41,28 @@ class PersonalAreaList(IngredientCategory, ListView):
 
         return context
 
+class AuthorsList(IngredientCategory, ListView):
+    model = Recipe
+    context_object_name = 'authors'
+    template_name = 'recipe_app/authors_list.html'
+
 
 
 class RecipeDetailView(IngredientCategory, DetailView):
     model = Recipe
     template_name = 'recipe_app/recipe_detail.html'
+
+class AuthorDetailView(IngredientCategory, ListView):
+    model = Recipe
+    context_object_name = 'author'
+    template_name = 'recipe_app/author_detail.html'
+
+    def recipe(request):
+        context = {
+            'users': User.objects.filter(author=request.user)
+        }
+
+        return render(request, 'author_detail.html', context)
 
 
 
@@ -97,24 +119,25 @@ class RegisterPage(IngredientCategory, FormView):
         return super(RegisterPage, self).get(*args, **kwargs)
 
 
-class RecipeCreate(CreateView):
+class RecipeCreate(LoginRequiredMixin, CreateView):
+    model = Recipe
+    fields = ['title', 'description', 'video', 'image', 'number', 'ingredient', 'gram', 'cooking', 'category']
+    template_name = 'recipe_app/recipe_form.html'
+    success_url = reverse_lazy('personal_list')
+
+    # def form_valid(self, form):
+    #     form.instance.user = self.request.user
+    #     return super(RecipeCreate, self).form_valid(form)
+
+
+
+
+class RecipeUpdate(LoginRequiredMixin, UpdateView):
     model = Recipe
     fields = ['title', 'description', 'video', 'image', 'number', 'ingredient', 'gram', 'cooking', 'category']
     success_url = reverse_lazy('personal_list')
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(RecipeCreate, self).form_valid(form)
-
-
-
-
-class RecipeUpdate(UpdateView):
-    model = Recipe
-    fields = ['title', 'description', 'video', 'image', 'number', 'ingredient', 'gram', 'cooking', 'category']
-    success_url = reverse_lazy('personal_list')
-
-class RecipeDelete(DeleteView):
+class RecipeDelete(LoginRequiredMixin, DeleteView):
     model = Recipe
     success_url = reverse_lazy('personal_list')
 

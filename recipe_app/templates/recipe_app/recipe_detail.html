@@ -10,8 +10,9 @@
           <div class="row featurette">
 
             <div class="col-md-8 order-md-2">
-              <a href="{% url 'recipe_detail' recipe.pk %}" class="lead"><h2 class="featurette-heading" style="margin-top: 5%;">{{ recipe.title }}</h2></a>
+              <p class="lead"><h2 class="featurette-heading" style="margin-top: 5%;">{{ recipe.title }}</h2></p>
                 <p style="color: grey; font-size: 80%"> {{recipe.category }} </p>
+                <a href="{% url 'author_detail' recipe.pk %}" style="color: grey; font-size: 80%"> {{recipe.user }} </a>
                 <p> {{ recipe.description }} </p>
             </div>
         </div>

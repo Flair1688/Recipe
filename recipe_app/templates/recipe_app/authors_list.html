@@ -1,0 +1,62 @@
+{% extends 'recipe_app/base.html' %}
+
+{% block content %}
+
+
+
+            <img src="{{ avatar.image.url }}" style="height: 220px; width: 240px"  alt="Generic placeholder image">
+
+  <form style="margin-top: 8%">
+                    <h3 class="sear-head editContent">Авторы</h3>
+
+            <div >
+        <div >
+          <div >
+            {% for user in view.get_user %}
+              <ul >
+            <li >
+ <div class="container marketing">
+          <div class="row featurette">
+            <div class="col-md-8 order-md-2">
+              <h3 class="lead">{{ user }}</h3>
+            </div>
+          <div class="col-md-3 order-md-1">
+            <img  src="{{ avatar.image.url }}" style="height: 220px; width: 240px"  alt="Generic placeholder image">
+          </div>
+        </div>
+      </div>
+            </li>
+              </ul>
+          </div>
+        </div>
+            </div>
+            {% endfor %}
+    </form>
+
+
+
+
+
+<!--<div class="pagination container">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">&#171;</a>
+            <a href="?page=1">1</a>
+            <span href="?page={{ page_obj.number }}">{{ page_obj.number }}</span>
+
+        {% endif %}
+
+        {% if page_obj.number > 1 %}
+        <span class="current">
+                    . . .
+         </span>
+        {% endif %}
+
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+            <a href="?page={{ page_obj.next_page_number }}">&#187;</a>
+        {% endif %}
+    </span>
+</div>-->
+{% endblock content %}
