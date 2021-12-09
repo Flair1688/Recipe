@@ -2,8 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
 class Avatar(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=False, verbose_name="Автор")
     image = models.ImageField(blank=True, upload_to='avatar/%Y/%m/%d', verbose_name='Аватарка')
+
+    def __str__(self):
+        return self.user.username
+
+
+
 
 class Category(models.Model):
     name = models.CharField(max_length=20, verbose_name='Категория блюда')

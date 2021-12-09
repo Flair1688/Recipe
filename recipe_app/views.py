@@ -11,7 +11,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Recipe, Ingredient, Category
+from .models import Recipe, Ingredient, Category, Avatar
 
 class IngredientCategory:
     # Фильтер по инградиентам и категории блюда
@@ -22,7 +22,9 @@ class IngredientCategory:
         return Category.objects.all()
 
     def get_user(self):
-        return User.objects.all()
+        return Avatar.objects.all()
+
+
 
 
 class RecipeList(IngredientCategory, ListView):
@@ -42,7 +44,7 @@ class PersonalAreaList(IngredientCategory, ListView):
         return context
 
 class AuthorsList(IngredientCategory, ListView):
-    model = Recipe
+    model = Avatar
     context_object_name = 'authors'
     template_name = 'recipe_app/authors_list.html'
 
